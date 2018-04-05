@@ -9,13 +9,18 @@ public class GreedyCoinChangeAlgorithm implements CoinChangeAlgorithm {
 
         for ( int i = denominations.length - 1; i >= 0; i-- ) {
             int denom = denominations[i];
-            int cantCoins = (int) (rest/denom);
+            int cantCoins = 0;
 
-            if ( cantCoins == 0 ) { coins[i] = 0; }
-            else if ( (rest - (denom * cantCoins)) >= 0 ) {
-                rest = rest - (denom * cantCoins);
-                coins[i] = cantCoins;
+            if ( denom > rest ) { 
+            	coins[i] = 0;
+            	break;
             }
+            while ( (rest - denom) >= 0 ) {
+                rest = rest - denom;
+                cantCoins++;
+            }
+            
+            coins[i] = cantCoins;
         }
 
         return coins;
